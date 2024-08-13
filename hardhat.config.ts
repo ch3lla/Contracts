@@ -1,12 +1,16 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const config: HardhatUserConfig = {
   solidity: "0.8.24",
   networks: {
-    hardhat: {
-      chainId: 1337, // Default chain ID for Hardhat network
-    },
+    ganache: {
+      url: process.env.GANACHE_URL, // Default Ganache GUI URL
+      accounts: { mnemonic: process.env.GANACHE_MMENONIC }
+    }
   },
 };
 

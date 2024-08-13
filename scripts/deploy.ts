@@ -1,20 +1,20 @@
 import { ethers } from "hardhat";
 
 async function main() {
-    // Get the ContractFactory
+  try {
     const FakeProductDetection = await ethers.getContractFactory("FakeProductDetection");
-
-    // Deploy the contract
+    console.log("Deploying FakeProductDetection...");
     const fakeProductDetection = await FakeProductDetection.deploy();
-
-    // Wait for the contract to be mined
-    // await fakeProductDetection.deployTransaction.wait();
-
-    //console.log(`FakeProductDetection deployed to: ${fakeProductDetection.address}`);
+    await fakeProductDetection.waitForDeployment();
+    console.log("FakeProductDetection deployed to:", await fakeProductDetection.getAddress());
+  } catch (error) {
+    console.error("Error during deployment:", error);
+  }
 }
 
-// Execute the deployment script
-main().catch((error) => {
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
     console.error(error);
-    process.exitCode = 1;
-});
+    process.exit(1);
+  });
